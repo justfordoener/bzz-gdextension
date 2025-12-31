@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://csd6b03655kov"]
+
+[ext_resource type="Texture2D" uid="uid://dbx66sovxd1" path="res://icon.svg" id="1_n3f48"]
+[ext_resource type="Script" uid="uid://dhdr2kpc6vqqt" path="res://tile.gd" id="1_vx4y2"]
+
+[node name="Tile" type="Node2D"]
+script = ExtResource("1_vx4y2")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_right = 128.0
+offset_bottom = 128.0
+texture_normal = ExtResource("1_n3f48")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_pressed"]
