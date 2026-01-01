@@ -2,7 +2,7 @@
 
 void MoveGenerator::_bind_methods() {
 	Ref<MoveGenerator> mg = memnew(MoveGenerator);
-	godot::ClassDB::bind_method(D_METHOD("print_type", "variant"), &MoveGenerator::print_type);
+	godot::ClassDB::bind_method(D_METHOD("available_moves", "variant"), &MoveGenerator::available_moves);
 }
 
 PackedInt64Array vector_to_godot_array(std::vector<int64_t> arr) {
@@ -14,9 +14,7 @@ PackedInt64Array vector_to_godot_array(std::vector<int64_t> arr) {
 	return new_arr;
 }
 
-PackedInt64Array MoveGenerator::print_type(const Variant &p_variant) const {
-	print_line(vformat("Type: %d", p_variant.get_type()), 2);
-
+PackedInt64Array MoveGenerator::available_moves(const Variant &p_variant) const {
 	return vector_to_godot_array(legal_moves(gamestate, turn_counter));
 }
 

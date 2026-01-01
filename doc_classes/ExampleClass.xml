@@ -9,7 +9,7 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="print_type" qualifiers="const">
+		<method name="available_moves" qualifiers="const">
 			<return type="void" />
 			<param index="0" name="variant" type="Variant" />
 			<description>

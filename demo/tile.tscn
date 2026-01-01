@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dhdr2kpc6vqqt" path="res://tile.gd" id="1_vx4y2"]
 
 [node name="Tile" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_vx4y2")
 
 [node name="TextureButton" type="TextureButton" parent="."]

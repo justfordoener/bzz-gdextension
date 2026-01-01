@@ -25,5 +25,5 @@ public:
 	MoveGenerator() = default;
 	~MoveGenerator() override = default;
 
-	PackedInt64Array print_type(const Variant &p_variant) const;
+	PackedInt64Array available_moves(const Variant &p_variant) const;
 };

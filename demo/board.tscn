@@ -11,5 +11,8 @@ script = ExtResource("1_p0ybc")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(469, 199)
-scale = Vector2(7.265625, 3.109375)
+scale = Vector2(2.336, 1)
 texture = ExtResource("2_psm7c")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, -301)
