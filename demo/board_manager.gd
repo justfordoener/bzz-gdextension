@@ -47,7 +47,7 @@ func _ready() -> void:
 		
 
 func index_to_tile_position(index: int) -> String:
-	var rank = str(int(float(num_ranks - index) / 7 + 1.0))
+	var rank = str(num_ranks - index / 7 + 1)
 	var file = char("a".unicode_at(0) + (index % 7) - 1)
 	return file + rank
 
