@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbmjfgh268lg1"
-path="res://.godot/imported/Gemini_Generated_Image_27vny327vny327vn.png-913db00b28685dca8b3556caaeb32179.ctex"
+uid="uid://j3053fbxxicu"
+path="res://.godot/imported/honey_bee.png-0501aac8cfa5d1ecc30153bda4ea4a24.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Gemini_Generated_Image_27vny327vny327vn.png"
-dest_files=["res://.godot/imported/Gemini_Generated_Image_27vny327vny327vn.png-913db00b28685dca8b3556caaeb32179.ctex"]
+source_file="res://honey_bee.png"
+dest_files=["res://.godot/imported/honey_bee.png-0501aac8cfa5d1ecc30153bda4ea4a24.ctex"]
 
 [params]
 

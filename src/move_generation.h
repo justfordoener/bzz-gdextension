@@ -4,8 +4,7 @@
 #include "godot_cpp/classes/wrapped.hpp"
 #include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/array.hpp"
-#include "move_calculation.h"
-#include <vector>
+#include "bot_tester.h"
 
 using namespace godot;
 
@@ -25,5 +24,8 @@ public:
 	MoveGenerator() = default;
 	~MoveGenerator() override = default;
 
-	PackedInt64Array available_moves(const Variant &p_variant) const;
+	PackedInt64Array available_moves();
+	PackedInt64Array send_user_move(PackedInt64Array move); // returns game_result
+	PackedInt64Array request_bot_move(); // returns game_result, botmove
+	PackedInt64Array get_tile_indices();
 };

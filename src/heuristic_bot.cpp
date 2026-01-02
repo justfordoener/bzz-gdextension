@@ -1,19 +1,18 @@
-/*
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <utility>
 #include <vector>
 #include <bitset>
-#include "move_calculation.cpp"
+#include "heuristic_bot.h"
 
 using namespace std;
 using Bitboard = int64_t;
 using Gamestate = vector<Bitboard>;
 
-int64_t DEPTH = 10;
-int64_t WIN_VAL = 1000;
-Bitboard SIXTY_FOUR_IS_BAD = 0b1111111111111111111111111111111111111111111111111111111111111110ULL;
+const int64_t DEPTH = 10;
+const int64_t WIN_VAL = 1000;
+const Bitboard SIXTY_FOUR_IS_BAD = 0b1111111111111111111111111111111111111111111111111111111111111110ULL;
 
 // for white distance to goal
 int64_t ct_ranks_inv(Bitboard x)
@@ -87,14 +86,3 @@ int64_t minmax_ab(Gamestate state, int64_t depth, int64_t turn_counter, int64_t 
     }
     return best_value;
 }
-
-int64_t not_main()
-{
-    Gamestate gamestate = START_POSITION;
-    print_gamestate(gamestate, 0, true);
-
-    cout << "Evaluation: " << minmax_ab(gamestate, 2, 0, -WIN_VAL, WIN_VAL) << "\n";
-
-    return 0;
-}
-*/

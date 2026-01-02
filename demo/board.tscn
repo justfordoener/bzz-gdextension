@@ -15,4 +15,5 @@ scale = Vector2(2.336, 1)
 texture = ExtResource("2_psm7c")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, -301)
+position = Vector2(591, 340)
+zoom = Vector2(0.6, 0.6)

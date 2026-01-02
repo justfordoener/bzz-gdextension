@@ -2,7 +2,7 @@ class_name Tile
 extends Node2D
 
 var board_manager: BoardManager
-var tile_position: String
+var tile_index: int
 var bee : Bee
 
 signal tile_clicked(tile: Tile)
@@ -45,4 +45,5 @@ func unhighlight() -> void:
 
 func send_bee(target_tile: Tile) -> void:
 	bee.move_to_tile(target_tile)
-	print("Moving bee from %s to %s" % [tile_position, target_tile.tile_position])
+	bee = null
+	print("Moving bee from %s to %s" % [tile_index, target_tile.tile_index])

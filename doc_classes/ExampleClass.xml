@@ -9,11 +9,29 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="available_moves" qualifiers="const">
-			<return type="void" />
-			<param index="0" name="variant" type="Variant" />
+		<method name="available_moves">
+			<return type="PackedInt64Array"/>
 			<description>
-				Print the type of the variant.
+				Get available moves
+			</description>
+		</method>
+		<method name="send_user_move">
+			<return type="PackedInt64Array" />
+			<param index="0" name="move" type="PackedInt64Array" />
+			<description>
+				Send moves from user to backend
+			</description>
+		</method>
+		<method name="request_bot_move">
+			<return type="PackedInt64Array" />
+			<description>
+				Get the move that the bot makes
+			</description>
+		</method>
+		<method name="get_tile_indices">
+			<return type="PackedInt64Array" />
+			<description>
+				Get indices of tiles for initialization
 			</description>
 		</method>
 	</methods>

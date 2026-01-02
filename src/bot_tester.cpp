@@ -1,17 +1,16 @@
-/*
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <utility>
 #include <vector>
 #include <bitset>
-#include "heuristic_bot.cpp"
+#include "bot_tester.h"
 
 using namespace std;
 using Bitboard = int64_t;
 using Gamestate = vector<Bitboard>;
 
-int64_t SEARCH_DEPTH = 5;
+const int64_t SEARCH_DEPTH = 10;
 
 bool equal_gamestates(const Gamestate &a, const Gamestate &b)
 {
@@ -40,10 +39,10 @@ int64_t game_terminated(Gamestate state, int64_t turn_counter, vector<Gamestate>
     if (state_counter == 2)
         return 3; // draw
     
-    return false;
+    return 0;
 }
 
-Gamestate make_turn(Gamestate gamestate, int64_t turn_counter, int64_t depth = SEARCH_DEPTH)
+Gamestate make_turn(Gamestate gamestate, int64_t turn_counter, int64_t depth)
 {
     vector<Gamestate> next_gamestates = generate_next_gamestates(gamestate, turn_counter);
 
@@ -110,4 +109,3 @@ int64_t also_not_main()
 
     return 0;    
 }
-*/
