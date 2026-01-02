@@ -1,11 +1,11 @@
 class_name BoardManager extends Node
 
-@export
 var tile_height = 100
 var tile_width = 110
 var tiles = []
 var tile_resource = preload("res://tile.tscn")
-var bee_resource = preload("res://bee.tscn")
+var honey_bee_resource = preload("res://honey_bee.tscn")
+var carpenter_bee_resource = preload("res://carpenter_bee.tscn")
 var available_moves : Array[Tile] = []
 var clicked_tile = null
 var clicked_tile_to : Array[Tile]
@@ -14,7 +14,8 @@ const num_ranks = 9
 const num_files = 7
 const max_tiles_per_file = 7
 const coordinate_offset = 64
-const initial_bee_positions : Array[int] = [11, 12, 13, 14, 50, 51, 52, 53]
+const initial_bee_positions_white : Array[int] = [50, 51, 52, 53]
+const initial_bee_positions_black : Array[int] = [11, 12, 13, 14]
 
 func _ready() -> void:
 	move_generator = MoveGenerator.new()
@@ -31,14 +32,21 @@ func _ready() -> void:
 	var available_moves_int = move_generator.available_moves()
 	available_moves = numerical_moves_to_tiles(available_moves_int)
 	# spawn bees
-	for idx in initial_bee_positions:
+	for idx in initial_bee_positions_white:
 		var tile : Tile = get_tile_by_position(idx)
 		if tile.bee == null:
-			var bee = bee_resource.instantiate()
+			var bee = honey_bee_resource.instantiate()
 			tile.bee = bee
 			bee.position = tile.position
 			add_child(bee)
-
+	for idx in initial_bee_positions_black:
+		var tile : Tile = get_tile_by_position(idx)
+		if tile.bee == null:
+			var bee = carpenter_bee_resource.instantiate()
+			tile.bee = bee
+			bee.position = tile.position
+			add_child(bee)
+			
 func index_to_coordinates(index : int) -> Vector2:
 	index -= 1
 	var x = index % 7 * tile_width + (tile_width / 2 * index / 7) 
@@ -82,24 +90,30 @@ func _on_tile_clicked(tile : Tile) -> void:
 		else:
 			print("no bee on this tile")
 	else:
-		if tile in clicked_tile_to:
-			await clicked_tile.send_bee(tile)
-			print("valid move")
-			_on_valid_move(clicked_tile, tile)
-		else:
-			print("invalid move. unselected tile")
-		var reclick = false
+		var reclick : bool = false
+		var moved : bool = false
+		
+		# Remove highlights
+		clicked_tile.deactivate()
 		for to_tile in clicked_tile_to:
 			to_tile.unhighlight()
 			for i in range(0, available_moves.size(), 2):
 				if available_moves[i] == tile:
 					reclick = true
 					break
+		
+		# try to move
+		if tile in clicked_tile_to:
+			moved = true
+			await clicked_tile.send_bee(tile)
+			print("valid move")
+			_on_valid_move(clicked_tile, tile)
+		else:
+			print("invalid move. unselected tile")
 			
 		clicked_tile_to = []
-		clicked_tile.deactivate()
 		clicked_tile = null
-		if reclick:
+		if reclick and not moved:
 			_on_tile_clicked(tile)
 	pass
 

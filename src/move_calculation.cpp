@@ -14,7 +14,10 @@ const Gamestate START_POSITION = {
 const int64_t BEES_PER_PLAYER = 4;
 const int64_t HEXAGON = 6;
 const Gamestate EMPTY_GAMESTATE = {0, 0, 0, 0, 0, 0, 0, 0};
-
+const Bitboard PORTAL_TILE_1 =      0b0000000000000000000000000001000000000000000000000000000000000000ULL;
+const Bitboard PORTAL_TILE_2 =      0b0000000000000000000000000000100000000000000000000000000000000000ULL;
+const Bitboard PORTAL_TILE_3 =      0b0000000000000000000000000000000000100000000000000000000000000000ULL;
+const Bitboard PORTAL_TILE_4 =      0b0000000000000000000000000000000000010000000000000000000000000000ULL;
 
 void print_gamestate(Gamestate gamestate, Bitboard highlighted_tile, bool censored)
 {
@@ -47,6 +50,22 @@ int64_t count_neighbors(Bitboard position, Bitboard tile)
     Bitboard surrounding_tiles = (tile << NEIGHBOR_OFFSETS[0]) | (tile << NEIGHBOR_OFFSETS[1]) | (tile << NEIGHBOR_OFFSETS[2]) |
                                  (tile >> NEIGHBOR_OFFSETS[0]) | (tile >> NEIGHBOR_OFFSETS[1]) | (tile >> NEIGHBOR_OFFSETS[2]);
     Bitboard neighbors = surrounding_tiles & position;
+    if (tile & PORTAL_TILE_1)
+    {
+        neighbors -= PORTAL_TILE_2 & neighbors;
+    }
+    else if (tile & PORTAL_TILE_2)
+    {
+        neighbors -= (PORTAL_TILE_1 | PORTAL_TILE_3) & neighbors;
+    }
+    else if (tile & PORTAL_TILE_3)
+    {
+        neighbors -= (PORTAL_TILE_2 | PORTAL_TILE_4) & neighbors;
+    }
+    else if (tile & PORTAL_TILE_4)
+    {
+        neighbors -= PORTAL_TILE_2 & neighbors;
+    }
     return std::bitset<64>(neighbors).count();
 }
 

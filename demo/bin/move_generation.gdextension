@@ -5,6 +5,10 @@ compatibility_minimum = "4.1"
 
 [libraries]
 ; Relative paths ensure that our GDExtension can be placed anywhere in the project directory.
+
+web.debug = "./web/libmove_generation.web.template_debug.wasm32.nothreads.wasm"
+web.release = "./web/libmove_generation.web.template_release.wasm32.nothreads.wasm"
+
 macos.single.debug = "./macos/libmove_generation.macos.template_debug.dylib"
 macos.double.debug = "./macos/libmove_generation.macos.template_debug.double.dylib"
 macos.single.release = "./macos/libmove_generation.macos.template_release.dylib"
@@ -54,3 +58,4 @@ web.wasm32.single.debug = "./web/libmove_generation.web.template_debug.wasm32.no
 web.wasm32.double.debug = "./web/libmove_generation.web.template_debug.wasm32.double.nothreads.wasm"
 web.wasm32.single.release = "./web/libmove_generation.web.template_release.wasm32.nothreads.wasm"
 web.wasm32.double.release = "./web/libmove_generation.web.template_release.wasm32.double.nothreads.wasm"
+

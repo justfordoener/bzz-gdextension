@@ -14,6 +14,8 @@ extern const Gamestate START_POSITION;
 extern const int64_t BEES_PER_PLAYER;
 extern const int64_t HEXAGON;
 extern const Gamestate EMPTY_GAMESTATE;
+extern const Bitboard PORTAL_RED;
+extern const Bitboard PORTAL_BLUE;
 
 void print_gamestate(Gamestate gamestate, Bitboard highlighted_tile = 0, bool censored = true);
 int64_t count_neighbors(Bitboard position, Bitboard tile);

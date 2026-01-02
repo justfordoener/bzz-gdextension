@@ -44,6 +44,6 @@ func unhighlight() -> void:
 	visual.modulate = Color.WHITE
 
 func send_bee(target_tile: Tile) -> void:
-	bee.move_to_tile(target_tile)
+	await bee.move_to_tile(target_tile)
 	bee = null
 	print("Moving bee from %s to %s" % [tile_index, target_tile.tile_index])

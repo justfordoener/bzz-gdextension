@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bobf3i5fci4gu"]
+
+[ext_resource type="Script" uid="uid://p804wf5mvdo" path="res://bee.gd" id="1_5e416"]
+[ext_resource type="Texture2D" uid="uid://cncgb6ar380xs" path="res://carpenter_bee.png" id="2_5e416"]
+
+[node name="Bee" type="Node2D"]
+script = ExtResource("1_5e416")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 1)
+rotation = 4.0142574
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_5e416")
