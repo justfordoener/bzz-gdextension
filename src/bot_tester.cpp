@@ -33,12 +33,16 @@ int64_t game_terminated(Gamestate state, int64_t turn_counter, vector<Gamestate>
     if ((black_bees & 0b0000111000000000000000000000000000000000000000000000000000000000ULL) || (!white_mobility && (turn_counter % 2 == 0)))
         return 2; // black wins
 
-    int64_t state_counter = 0;
-    for (long unsigned int i = 0; i < history.size(); ++i)
-        state_counter += (int64_t)equal_gamestates(state, history[i]);
-    if (state_counter == 2)
-        return 3; // draw
-    
+    //int64_t state_counter = 0;
+    //for (long unsigned int i = 0; i < history.size(); ++i)
+    //    state_counter += (int64_t)equal_gamestates(state, history[i]);
+    //if (state_counter == 2)
+    //    return 3; // draw
+    if (turn_counter >= 4) {
+        if (state == history[turn_counter - 2] || state == history[turn_counter - 4]) 
+            return 3;
+    }
+
     return 0;
 }
 

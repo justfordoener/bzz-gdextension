@@ -84,8 +84,24 @@ def load_model():
     return model
 # ==================== Test / Play against Heuristic ==========
 
+def get_human_move(gamestate, turn_counter):
+    while(True):
+        from_tile = int(input("What piece to move? "))
+        to_tile = 0
+        possible_gamestates = bot_tester.generate_next_gamestates(gamestate, turn_counter)
+        for i, bee in enumerate(gamestate):
+            if (i > 3 and turn_counter % 2 == 0) or (i <= 3 and turn_counter % 2 == 1):
+                continue
+            if (2**from_tile == bee):
+                changed_gamestate = gamestate.copy()
+                to_tile = int(input("Where to move to? "))
+                changed_gamestate[i] = 2**to_tile
+                if changed_gamestate in possible_gamestates:
+                    return changed_gamestate
+        print("Invalid Move!")
 
-def play_games_against_heuristic(model, num_test_games=2):
+
+def play_games_against_ai(model, num_test_games=2, opponent="heuristic"):
     wins, losses, draws = 0, 0, 0
     
     for game_idx in tqdm(range(num_test_games)):
@@ -99,13 +115,16 @@ def play_games_against_heuristic(model, num_test_games=2):
 
         while not game_over:
             # 0 for White, 1 for Black
-            side_to_move = 0 if turn_counter % 2 != 0 else 1
+            side_to_move = 0 if turn_counter % 2 == 0 else 1
             
             is_ai_turn = (side_to_move == ai_side)
 
             if not is_ai_turn:
                 # 1. Heuristic Move
-                gamestate = bot_tester.make_turn(gamestate, turn_counter, 8)
+                if (opponent == "heuristic"):
+                    gamestate = bot_tester.make_turn(gamestate, turn_counter, 8)
+                else:
+                    gamestate = get_human_move(gamestate, turn_counter)
             else:
                 # 2. AI Move (Neural Net)
                 possible_gamestates = bot_tester.generate_next_gamestates(gamestate, turn_counter)
@@ -134,10 +153,13 @@ def play_games_against_heuristic(model, num_test_games=2):
                 gamestate = eval_list[0][1]
 
             game_history.append(gamestate)
+            print(gamestate)
+            turn_counter += 1
             res = bot_tester.game_terminated(gamestate, turn_counter, game_history)
             bot_tester.print_gamestate(gamestate)
             
             if res != 0:
+                print("Result: ", res)
                 game_over = True
                 if res == 3:
                     draws += 1
@@ -146,7 +168,6 @@ def play_games_against_heuristic(model, num_test_games=2):
                 else:
                     losses += 1
 
-            turn_counter += 1
         print(f"\n Turn counter: ", turn_counter)
 
     print(f"\n--- Results vs Heuristic (1=Black, 0=White) ---")
@@ -155,9 +176,12 @@ def play_games_against_heuristic(model, num_test_games=2):
     if num_test_games > 0:
         print(f"Win Rate: {(wins / num_test_games) * 100:.1f}%")
 
-def train_and_save_model():
+def train_and_save_model(use_pretrained = True):
     torch.manual_seed(0)
-    model = ValueNet()
+    if use_pretrained:
+        model = load_model()
+    else:
+        model = ValueNet()
     trainer = TDLambdaTrainer(model)
 
     for game_idx in tqdm(range(NUM_GAMES)):
@@ -236,5 +260,5 @@ def train_and_save_model():
 
 # ===================== Example Usage / Game Loop =====================
 if __name__ == "__main__":
-    train_and_save_model()
-    play_games_against_heuristic(load_model())
+    # train_and_save_model()
+    play_games_against_ai(load_model(), 2, "human")
