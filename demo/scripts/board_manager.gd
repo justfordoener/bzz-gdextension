@@ -3,9 +3,13 @@ class_name BoardManager extends Node
 var tile_height = 100
 var tile_width = 110
 var tiles = []
-var tile_resource = preload("res://tile.tscn")
-var honey_bee_resource = preload("res://honey_bee.tscn")
-var carpenter_bee_resource = preload("res://carpenter_bee.tscn")
+var tile_resource = preload("res://scenes/tile.tscn")
+var honey_bee_resource = preload("res://scenes/honey_bee.tscn")
+var carpenter_bee_resource = preload("res://scenes/carpenter_bee.tscn")
+var portal_red_1 = preload("res://assets/portalr1.png")
+var portal_red_2 = preload("res://assets/portalr2.png")
+var portal_blue_1 = preload("res://assets/portalb1.png")
+var portal_blue_2 = preload("res://assets/portalb2.png")
 var available_moves : Array[Tile] = []
 var clicked_tile = null
 var clicked_tile_to : Array[Tile]
@@ -47,10 +51,27 @@ func _ready() -> void:
 			bee.position = tile.position
 			add_child(bee)
 			
+	# spawn portals
+	_spawn_portal(portal_red_1)
+	_spawn_portal(portal_red_1)
+	_spawn_portal(portal_red_1)
+	_spawn_portal(portal_red_1)
+	
+func _spawn_portal(png : Resource) -> void:
+	pass
+	# TODO
+	#
+	#var sprite = Sprite2D.new()
+	#sprite.texture = png
+	#sprite.position
+			
 func index_to_coordinates(index : int) -> Vector2:
 	index -= 1
-	var x = index % 7 * tile_width + (tile_width / 2 * index / 7) 
-	var y = index / 7 * tile_height
+	var col: int = index % 7
+	var row: int = index / 7
+
+	var x: float = col * tile_width + (tile_width * 0.5 * row)
+	var y: float = row * tile_height
 	return Vector2(x, y)
 
 func get_tile_by_position(pos: int) -> Tile:
@@ -143,4 +164,3 @@ func terminate_game(game_result) -> void:
 		print("Draw")
 	else:
 		printerr("unknown result type: ", game_result)
-	

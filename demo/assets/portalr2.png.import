@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j3053fbxxicu"
-path="res://.godot/imported/honey_bee.png-0501aac8cfa5d1ecc30153bda4ea4a24.ctex"
+uid="uid://d4bcb1p45wajf"
+path="res://.godot/imported/portalr2.png-c7507ab7bf378cd4b6fcd9944860eb27.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://honey_bee.png"
-dest_files=["res://.godot/imported/honey_bee.png-0501aac8cfa5d1ecc30153bda4ea4a24.ctex"]
+source_file="res://assets/portalr2.png"
+dest_files=["res://.godot/imported/portalr2.png-c7507ab7bf378cd4b6fcd9944860eb27.ctex"]
 
 [params]
 

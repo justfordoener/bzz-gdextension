@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clec7i0qn3xaj"
-path="res://.godot/imported/honey_comb.png-d8cb477349b1b9403e20d70b156fa732.ctex"
+uid="uid://cncgb6ar380xs"
+path="res://.godot/imported/carpenter_bee.png-b9835d2eb5d6640a1c811377d9cbcedd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://honey_comb.png"
-dest_files=["res://.godot/imported/honey_comb.png-d8cb477349b1b9403e20d70b156fa732.ctex"]
+source_file="res://assets/carpenter_bee.png"
+dest_files=["res://.godot/imported/carpenter_bee.png-b9835d2eb5d6640a1c811377d9cbcedd.ctex"]
 
 [params]
 

@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://pwcc77fsjraq"]
+
+[ext_resource type="Script" uid="uid://c3dl6m3u48gxh" path="res://scripts/user_interface.gd" id="1_syvep"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_syvep")
+
+[node name="Multiplayer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 133.0
+offset_right = 140.0
+offset_bottom = 180.0
+text = "Multiplayer"
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 131.0
+offset_right = 257.0
+offset_bottom = 178.0
+text = "Host"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 230.0
+offset_right = 259.0
+offset_bottom = 277.0
+text = "Join"
+
+[connection signal="pressed" from="Multiplayer" to="." method="_on_multiplayer_button_pressed"]
+[connection signal="pressed" from="Host" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Join" to="." method="_on_join_button_pressed"]

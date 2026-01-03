@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://csd6b03655kov"]
 
-[ext_resource type="Script" uid="uid://dhdr2kpc6vqqt" path="res://tile.gd" id="1_vx4y2"]
-[ext_resource type="Texture2D" uid="uid://clec7i0qn3xaj" path="res://honey_comb.png" id="2_vx4y2"]
+[ext_resource type="Script" uid="uid://dhdr2kpc6vqqt" path="res://scripts/tile.gd" id="1_vx4y2"]
+[ext_resource type="Texture2D" uid="uid://clec7i0qn3xaj" path="res://assets/honey_comb.png" id="2_vx4y2"]
 
 [node name="Tile" type="Node2D"]
 rotation = 0.5235988

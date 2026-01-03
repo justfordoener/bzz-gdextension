@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh0oj81pufivs"]
+
+[ext_resource type="Script" uid="uid://bkwk40ybs8kgm" path="res://scripts/board_manager.gd" id="1_tx6nw"]
+[ext_resource type="Texture2D" uid="uid://dbx66sovxd1" path="res://assets/icon.svg" id="2_nglv8"]
+[ext_resource type="PackedScene" uid="uid://bhbvna288jd0" path="res://scenes/web_socket.tscn" id="3_nglv8"]
+[ext_resource type="PackedScene" uid="uid://pwcc77fsjraq" path="res://scenes/user_interface.tscn" id="4_fv4ni"]
+
+[node name="Board" type="Node"]
+script = ExtResource("1_tx6nw")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(469, 199)
+scale = Vector2(2.336, 1)
+texture = ExtResource("2_nglv8")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(591, 340)
+zoom = Vector2(0.6, 0.6)
+
+[node name="WebSocket" parent="." instance=ExtResource("3_nglv8")]
+
+[node name="UserInterface" parent="." instance=ExtResource("4_fv4ni")]
