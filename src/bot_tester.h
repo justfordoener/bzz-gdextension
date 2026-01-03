@@ -27,4 +27,6 @@ Gamestate make_turn(
 
 int64_t also_not_main();
 
+Gamestate get_start_position();
+
 #endif // HEURISTIC_BOT_H

@@ -78,7 +78,7 @@ Bitboard generate_moves(Bitboard position, Bitboard tile)
         return 0;
 
     Bitboard possible_moves = 0;
-    for (int64_t i = 0; i < NEIGHBOR_OFFSETS.size(); ++i)
+    for (long unsigned int i = 0; i < NEIGHBOR_OFFSETS.size(); ++i)
     {
         Bitboard ray = tile;
         Bitboard ray_rev = tile;
@@ -138,7 +138,7 @@ std::vector<Gamestate> generate_next_gamestates(Gamestate gamestate, int64_t tur
         if (neighbors == 0)
             continue;
 
-        for (int64_t j = 0; j < NEIGHBOR_OFFSETS.size(); ++j)
+        for (long unsigned int j = 0; j < NEIGHBOR_OFFSETS.size(); ++j)
         {
             Bitboard ray = bee;
             Bitboard ray_rev = bee;
@@ -203,7 +203,7 @@ int64_t number_legal_moves(Gamestate gamestate, int64_t turn_counter)
     for (int64_t i = start_bee_index; i < start_bee_index + BEES_PER_PLAYER; ++i) 
     {
         Bitboard bee = gamestate[i];
-        int64_t from = ctz(bee);
+        //int64_t from = ctz(bee);
         Bitboard bitboard_moves = generate_moves(position, bee);
         legal_moves_counter += count_ones(bitboard_moves);
     }
