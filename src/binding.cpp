@@ -29,4 +29,12 @@ PYBIND11_MODULE(bot_tester, m)
     m.def("generate_next_gamestates", [](std::vector<int64_t> gamestate, int64_t turn_counter) {
         return generate_next_gamestates(gamestate, turn_counter);
     });
+
+    m.def("make_turn", [](std::vector<int64_t> gamestate, int64_t turn_counter, int64_t depth) {
+        return make_turn(gamestate, turn_counter, depth);
+    });
+
+    m.def("print_gamestate", [](std::vector<int64_t> gamestate) {
+        return print_gamestate(gamestate);
+    });
 }
