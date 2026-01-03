@@ -14,7 +14,7 @@ const int64_t SEARCH_DEPTH = 10;
 
 bool equal_gamestates(const Gamestate &a, const Gamestate &b)
 {
-    for (int64_t i = 0; i < a.size(); ++i)
+    for (long unsigned int i = 0; i < a.size(); ++i)
     {
         if (a[i] != b[i])
             return false;
@@ -34,7 +34,7 @@ int64_t game_terminated(Gamestate state, int64_t turn_counter, vector<Gamestate>
         return 2; // black wins
 
     int64_t state_counter = 0;
-    for (int64_t i = 0; i < history.size(); ++i)
+    for (long unsigned int i = 0; i < history.size(); ++i)
         state_counter += (int64_t)equal_gamestates(state, history[i]);
     if (state_counter == 2)
         return 3; // draw
@@ -108,4 +108,9 @@ int64_t also_not_main()
         cout << "Draw\n";
 
     return 0;    
+}
+
+Gamestate get_start_position()
+{
+    return START_POSITION;
 }
