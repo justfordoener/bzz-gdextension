@@ -2,7 +2,7 @@ extends Control
 
 var websocket : WebSocketManager
 var template_message = {
-	"body" = "None"
+	"lobby" = ""
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -22,4 +22,5 @@ func _on_host_button_pressed() -> void:
 
 
 func _on_join_button_pressed() -> void:
+	template_message.lobby = Data.lobby_id
 	websocket.send_message(template_message, "join")

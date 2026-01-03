@@ -50,8 +50,11 @@ func _process_message(message) -> void:
 			printerr(message)
 	elif message.mode == "lobby_query":
 		Data.lobby_ids = message.lobby_ids
+		Data.lobby_id = message.lobby_ids[0] #TODO: generate lobby buttons instead
 	elif message.mode == "connect":
 		Data.connection_id = message.connection_id
+	elif message.mode == "opponent_cid":
+		Data.opponent_cid = message.connection_id
 	
 func send_message(message : Dictionary, route : String):
 	var payload = {
