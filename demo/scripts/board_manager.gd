@@ -30,6 +30,7 @@ func _ready() -> void:
 		new_tile.connect("tile_clicked", _on_tile_clicked)
 		new_tile.position = index_to_coordinates(index)
 		new_tile.tile_index = index
+		_spawn_portal(index, new_tile.position)
 		add_child(new_tile)
 		tiles.append(new_tile)
 			
@@ -50,20 +51,30 @@ func _ready() -> void:
 			tile.bee = bee
 			bee.position = tile.position
 			add_child(bee)
-			
-	# spawn portals
-	_spawn_portal(portal_red_1)
-	_spawn_portal(portal_red_1)
-	_spawn_portal(portal_red_1)
-	_spawn_portal(portal_red_1)
 	
-func _spawn_portal(png : Resource) -> void:
-	pass
-	# TODO
-	#
-	#var sprite = Sprite2D.new()
-	#sprite.texture = png
-	#sprite.position
+func _spawn_portal(index : int, position : Vector2) -> void:
+	var img
+	var pos = position
+	match index:
+		28:
+			pos.x += tile_width + 10
+			img = portal_red_1
+		29:
+			pos.x -= tile_width + 10
+			img = portal_red_2			
+		35:
+			pos.x += tile_width + 10
+			img = portal_blue_2
+		36:
+			pos.x -= tile_width + 10
+			img = portal_blue_1
+		_:
+			return
+	var sprite = Sprite2D.new()
+	sprite.texture = img
+	sprite.position = pos
+	sprite.scale = Vector2(0.5, 0.5)
+	add_child(sprite)
 			
 func index_to_coordinates(index : int) -> Vector2:
 	index -= 1
