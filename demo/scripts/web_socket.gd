@@ -2,10 +2,13 @@ class_name WebSocketManager extends Node
 
 @export var websocket_url := "wss://0i5scnug9h.execute-api.eu-north-1.amazonaws.com/production/"
 @onready var user_interface = $"../UserInterface"
+@onready var board_manager = $".."
 @onready var socket := WebSocketPeer.new()
 var current_state := WebSocketPeer.STATE_CLOSED
-var template_message = {
-	"body" = "None"
+
+var payload = {
+	"action": "no action",
+	"message": "empty message"
 }
 
 func _ready() -> void:
@@ -26,7 +29,7 @@ func _process(_delta: float) -> void:
 				print("WebSocket state: CONNECTING")
 			WebSocketPeer.STATE_OPEN:
 				print("WebSocket state: OPEN")
-				send_message(template_message, "get_connection_id")
+				send_message(payload, "get_connection_id")
 			WebSocketPeer.STATE_CLOSING:
 				print("WebSocket state: CLOSING")
 			WebSocketPeer.STATE_CLOSED:
@@ -55,13 +58,12 @@ func _process_message(message) -> void:
 		Data.connection_id = message.connection_id
 	elif message.mode == "opponent_cid":
 		Data.opponent_cid = message.connection_id
+	elif message.mode == "moved":
+		board_manager.make_opponent_player_move(message)
 	
 func send_message(message : Dictionary, route : String):
-	var payload = {
-		"action": "none",
-		"message": message
-	}
 	payload.action = route
+	payload.message = message
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
 		var error = socket.send_text(JSON.stringify(payload))
 		print("sent message: " + JSON.stringify(payload, "\t"))

@@ -1,8 +1,7 @@
 class_name BoardManager extends Node
 
-var tile_height = 100
-var tile_width = 110
-var tiles = []
+@onready var websocket = $WebSocket
+
 var tile_resource = preload("res://scenes/tile.tscn")
 var honey_bee_resource = preload("res://scenes/honey_bee.tscn")
 var carpenter_bee_resource = preload("res://scenes/carpenter_bee.tscn")
@@ -10,6 +9,10 @@ var portal_red_1 = preload("res://assets/portalr1.png")
 var portal_red_2 = preload("res://assets/portalr2.png")
 var portal_blue_1 = preload("res://assets/portalb1.png")
 var portal_blue_2 = preload("res://assets/portalb2.png")
+
+var tile_height = 100
+var tile_width = 110
+var tiles = []
 var available_moves : Array[Tile] = []
 var clicked_tile = null
 var clicked_tile_to : Array[Tile]
@@ -150,13 +153,27 @@ func _on_tile_clicked(tile : Tile) -> void:
 	pass
 
 func _on_valid_move(from : Tile, to : Tile) -> void:
+	if not Data.is_singleplayer_mode:
+		var message = {
+			"mode" : "moved",
+			"cid" : Data.connection_id,
+			"ocid" : Data.opponent_cid,
+			"from" : from.tile_index,
+			"to" : to.tile_index
+		}
+		websocket.send_message(message, "moved")
+	
 	available_moves = []
 	var user_move : PackedInt64Array = [from.tile_index, to.tile_index]
 	var game_result = move_generator.send_user_move(user_move)[0]
 	if (game_result != 0):
 		terminate_game(game_result)
 		return
-	var bot_move : PackedInt64Array = move_generator.request_bot_move()
+	var bot_move : PackedInt64Array
+	if Data.is_singleplayer_mode:
+		bot_move = move_generator.request_bot_move()
+	else:
+		return
 	game_result = bot_move[2]
 	bot_move.remove_at(2)
 	var move_tile : Array[Tile] = numerical_moves_to_tiles(bot_move)
@@ -165,7 +182,11 @@ func _on_valid_move(from : Tile, to : Tile) -> void:
 		terminate_game(game_result)
 		return
 	available_moves = numerical_moves_to_tiles(move_generator.available_moves())
-	
+
+func make_opponent_player_move(message : Dictionary) -> void:
+	#TODO 
+	pass
+
 func terminate_game(game_result) -> void:
 	if (game_result == 1):
 		print("White wins")

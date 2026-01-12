@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 
 func _on_multiplayer_button_pressed() -> void:
 	websocket.send_message(template_message, "query_lobbies")
+	Data.is_singleplayer_mode = false
 
 
 func _on_host_button_pressed() -> void:
