@@ -28,9 +28,9 @@ int64_t game_terminated(Gamestate state, int64_t turn_counter, vector<Gamestate>
     Bitboard black_bees = state[4] | state[5] | state[6] | state[7];
     int64_t white_mobility = number_legal_moves(state, 0);
     int64_t black_mobility = number_legal_moves(state, 1);
-    if ((white_bees & 0b0000000000000000000000000000000000000000000000000000000011100000ULL) || (!black_mobility && (turn_counter % 2 == 1)))
+    if ((white_bees & 0b0000000000000000000000000000000000000000000000000000000011100000ULL) || (!black_mobility && (turn_counter % 2 == 0)))
         return 1; // white wins
-    if ((black_bees & 0b0000111000000000000000000000000000000000000000000000000000000000ULL) || (!white_mobility && (turn_counter % 2 == 0)))
+    if ((black_bees & 0b0000111000000000000000000000000000000000000000000000000000000000ULL) || (!white_mobility && (turn_counter % 2 == 1)))
         return 2; // black wins
 
     //int64_t state_counter = 0;

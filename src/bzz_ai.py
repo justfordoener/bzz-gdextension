@@ -3,15 +3,20 @@ import torch.nn as nn
 import torch.optim as optim
 from collections import deque
 from tqdm import tqdm
-# Assuming these come from your 'bindings' or external logic
-import bot_tester 
+import random
+
+import bot_tester
 
 # Constants
 LAYER_SIZES = [97, 64, 16, 1]
 LEARNING_RATE = 1e-3
-LAMBDA = 0.85
-GAMMA = 0.99
+LAMBDA = 0.85 # Eligibility trace decay rate
+GAMMA = 0.99 # Discount factor
 NUM_GAMES = 100000
+EPSILON = 0.1 # Exploration rate
+SEED = 42
+rng = random.Random(SEED)
+MODEL_PATH = "ai_models/stupid"
 
 # ===================== Neural Network =====================
 class ValueNet(nn.Module):
@@ -74,7 +79,7 @@ def load_model():
 
     # 2. Load the saved data
     # Use weights_only=True for security if you're on a newer version of Torch
-    checkpoint = torch.load("src/ai_models/stupid", weights_only=False)
+    checkpoint = torch.load(MODEL_PATH, weights_only=False)
 
     # 3. Load the weights into the model
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -203,32 +208,29 @@ def train_and_save_model(use_pretrained = True):
             
             evaluations = []
             for gs in possible_gamestates:
-                # Build your feature vector (57 elements)
-                neighbor_counts = []
-                for bee in gs:
-                    neighbor_counts.append(bot_tester.count_neighbors(gs, bee))
+                neighbor_counts = [bot_tester.count_neighbors(gs, bee) for bee in gs]
                 legal_moves = bot_tester.legal_moves(gs, turn_counter)
-                legal_moves += [0] * (80 - len(legal_moves)) # Padding to fix dim
+                legal_moves += [0] * (80 - len(legal_moves))
                 features = gs + neighbor_counts + legal_moves + [side_to_move]
                 feat_tensor = torch.tensor(features, dtype=torch.float32)
-                
+
                 with torch.no_grad():
                     val = model(feat_tensor).item()
-                evaluations.append((feat_tensor, val))
 
-            # 2. Pick best move based on side to move
-            # White: 1.0, Black -1.0
+                evaluations.append((feat_tensor, val, gs))  # <-- include gamestate
+
             multiplier = 1 if side_to_move == 1 else -1
             evaluations.sort(key=lambda x: x[1] * multiplier, reverse=True)
-            
-            best_state_tensor, best_value = evaluations[0]
 
-            # 3. TD Update: Update the PREVIOUS state using the CURRENT state's value
-            if prev_state_tensor is not None:
-                trainer.update(prev_state_tensor, best_value, reward=0, terminal=False)
+            if rng.random() < EPSILON:
+                chosen = rng.choice(evaluations)
+            else:
+                chosen = evaluations[0]
 
+            best_state_tensor, best_value, best_gamestate = chosen
             prev_state_tensor = best_state_tensor
-            gamestate = possible_gamestates[0] # Update game board
+            gamestate = best_gamestate
+
             game_history.append(gamestate)
             
             # 4. Check for terminal condition
@@ -243,7 +245,7 @@ def train_and_save_model(use_pretrained = True):
                 trainer.update(prev_state_tensor, 0, reward=result, terminal=True)
 
     # ===================== Save & Summary =====================
-    save_path = "src/ai_models/stupid"
+    save_path = MODEL_PATH
     torch.save({
         'model_state_dict': model.state_dict(),
         'layer_sizes': LAYER_SIZES,
@@ -260,5 +262,5 @@ def train_and_save_model(use_pretrained = True):
 
 # ===================== Example Usage / Game Loop =====================
 if __name__ == "__main__":
-    # train_and_save_model()
-    play_games_against_ai(load_model(), 2, "human")
+    train_and_save_model(False)
+    # play_games_against_ai(load_model(), 2, "human")
