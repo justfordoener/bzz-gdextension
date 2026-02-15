@@ -4,6 +4,7 @@ import torch.optim as optim
 from collections import deque
 from tqdm import tqdm
 import random
+import os
 
 import bot_tester
 
@@ -16,7 +17,8 @@ NUM_GAMES = 100000
 EPSILON = 0.1 # Exploration rate
 SEED = 42
 rng = random.Random(SEED)
-MODEL_PATH = "ai_models/stupid"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ai_models", "stupid")
+
 
 # ===================== Neural Network =====================
 class ValueNet(nn.Module):
@@ -79,7 +81,7 @@ def load_model():
 
     # 2. Load the saved data
     # Use weights_only=True for security if you're on a newer version of Torch
-    checkpoint = torch.load(MODEL_PATH, weights_only=False)
+    checkpoint = torch.load(MODEL_PATH, weights_only=True)
 
     # 3. Load the weights into the model
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -262,5 +264,5 @@ def train_and_save_model(use_pretrained = True):
 
 # ===================== Example Usage / Game Loop =====================
 if __name__ == "__main__":
-    train_and_save_model(False)
-    # play_games_against_ai(load_model(), 2, "human")
+    # train_and_save_model(False)
+    play_games_against_ai(load_model(), 2, "human")
